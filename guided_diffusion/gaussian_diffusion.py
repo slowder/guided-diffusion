@@ -851,6 +851,7 @@ class GaussianDiffusion:
         init_image=None,
         randomize_class=False,
         cond_fn_with_grad=False,
+        mask=None,
     ):
         """
         Use DDIM to sample from the model and yield intermediate samples from
@@ -899,6 +900,8 @@ class GaussianDiffusion:
                     model_kwargs=model_kwargs,
                     eta=eta,
                 )
+                if mask is not None:
+                    out["sample"] *= mask
                 yield out
                 img = out["sample"]
 
