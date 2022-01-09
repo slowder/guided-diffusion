@@ -901,7 +901,8 @@ class GaussianDiffusion:
                     eta=eta,
                 )
                 if mask is not None:
-                    out["sample"] *= mask
+                    inverse_mask = 1 - mask
+                    out["sample"] = out["sample"] * mask + init_image * inverse_mask
                 yield out
                 img = out["sample"]
 
